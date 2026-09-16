@@ -1,0 +1,25 @@
+name: Compiler APK Annaelle
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Compilation avec Buildozer
+      uses: ArtemSBulgakov/buildozer-action@v1
+      id: buildozer
+      with:
+        command: buildozer -v android debug
+
+    - name: Télécharger l'APK généré
+      uses: actions/upload-artifact@v4
+      with:
+        name: package-apk
+        path: bin/*.apk
+        
